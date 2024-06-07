@@ -10,6 +10,22 @@
 </head>
 <body>
     <div class="box">
+        <?php
+          if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+            if (!empty($_POST["cpf"])) {
+                $cpf = $_POST["cpf"];
+                $cpf = preg_replace('/[^0-9]/', '', $cpf);
+                if (strlen($cpf) == 11) {
+                    echo "CPF digitado: " . substr($cpf, 0, 3) . "." . substr($cpf, 3, 3) . "." . substr($cpf, 6, 3) . "-" . substr($cpf, 9, 2);
+                } else {
+                    echo "CPF inválido!";
+                }
+            } else {
+                echo "Por favor, preencha o campo CPF!";
+            }
+        }
+        ?>
         <form action="cadastro.php" method="POST">
             <fieldset>
                 <legend><b>Formulário de Clientes</b></legend>
@@ -30,8 +46,9 @@
                 </div>
                 <br><br>
                 <div class="inputBox">
-                    <input type="number" name="cpf" id="cpf" class="inputUser" required>
-                    <label for="cpf" class="labelInput">CPF</label>
+                <label for="cpf">CPF:</label>
+                <input type="text" id="cpf" name="cpf" maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Digite um CPF válido (formato: xxx.xxx.xxx-xx)" required>
+                <br>
                 </div>
                 <br><br>
                 <label for="data_nascimento"><b>Data de Nascimento:</b></label>
