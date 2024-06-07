@@ -46,13 +46,13 @@
                 </div>
                 <br><br>
                 <div class="inputBox">
-                <label for="cpf">CPF:</label>
-                <input type="text" id="cpf" name="cpf" maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Digite um CPF válido (formato: xxx.xxx.xxx-xx)" required>
+                    <label for="cpf" class="labelInput">CPF</label>
+                    <input type="text" id="cpf" name="cpf" class="inputUser" maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Digite um CPF válido (formato: xxx.xxx.xxx-xx)" required>
                 <br>
                 </div>
                 <br><br>
-                <label for="data_nascimento"><b>Data de Nascimento:</b></label>
-                <input type="date" name="data_nascimento" id="data_nascimento" required>
+                    <label for="data_nascimento"><b>Data de Nascimento:</b></label>
+                    <input type="date" name="data_nascimento" id="data_nascimento" required>
                 <br><br><br>
                 <div class="inputBox">
                     <input type="text" name="cidade" id="cidade" class="inputUser" required>
