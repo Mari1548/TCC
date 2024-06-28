@@ -11,6 +11,6 @@ if($con->connect_errno)
 }
 else
 {
-    echo"conexao OKAY";
+    echo"conexao OKAY!";
 }
 ?>

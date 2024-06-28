@@ -1,19 +1,20 @@
 <?php
-if(isset($_POST['submit']))
-{
-    include_once('conexao.php');
+    if(isset($_POST['submit'])){
+        include_once('conexao.php');
 
-    $nome =$_POST['nome'];
-    $email =$_POST['email'];
-    $telefone =$_POST['telefone'];
-    $data_nasc =$_POST['data_nascimento'];
-    $cidade =$_POST['cidade'];
+        $codcliente =$_POST['codcliente'];
+        $cpf =$_POST['cpf'];
+        $nome =$_POST['nome'];
+        $email =$_POST['email'];
+        $cidade =$_POST['cidade'];
+        $telefone =$_POST['telefone'];
+        $datan =$_POST['datan'];
+        
+        $result = mysqli_query($con,"INSERT INTO clientes(codcliente, cpf, nome, email, cidade, telefone, datan) values ('$codcliente','$cpf','$nome','$email','$cidade','$telefone','$datan')");
 
-    $result = mysqli_query($con,"INSERT INTO cliente(nome, email, 
-    telefone, datan, cidade) values
-    ('$nome','$email','$telefone','$data_nasc','$cidade')");
-
-    echo ('cadastrado com sucesso!');
-
-}
+        echo(" cadastrado com sucesso!");
+    }
+    else{
+        echo("Algo ocorreu. Não foi possível realizar o cadastro.");
+    }
 ?>
