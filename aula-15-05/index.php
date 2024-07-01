@@ -16,11 +16,6 @@
                 <legend><b>Formulário de Clientes</b></legend>
                 <br>
                 <div class="inputBox">
-                    <input type="text" id="codcliente" name="codcliente" class="inputUser" required>
-                    <label for="codcliente" class="labelInput">codcliente</label>
-                </div>
-                <br>
-                <div class="inputBox">
                     <input type="text" id="cpf" name="cpf" class="inputUser" required>
                     <label for="cpf" class="labelInput">CPF</label>
                 </div>
@@ -50,7 +45,7 @@
                 <br><br><br>
                 
                
-                <input type="submit" name="submit" id="submit" value="Cadastrar-se">>
+                <input type="submit" name="submit" id="submit" value="Cadastrar-se">
             </fieldset>
         </form>
     </div>

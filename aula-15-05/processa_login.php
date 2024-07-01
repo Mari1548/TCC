@@ -3,7 +3,7 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $email = $_POST['email'];
-    $senha = $_POST['senha'];
+    $cpf = $_POST['cpf'];
     
     
     $servername = "localhost";
@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = "ceep";
     $dbname = "belavitta";
     
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli($localhost, $aluno, $ceep, $belavitta);
     
  
     if ($conn->connect_error) {
@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
 
-    $sql = "SELECT id FROM usuarios WHERE email='$email' AND senha='$senha'";
+    $sql = "SELECT id FROM usuarios WHERE email='$email' AND cpf='$cpf'";
     $result = $conn->query($sql);
     
     if ($result->num_rows > 0) {
@@ -32,6 +32,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
     
-    $conn->close();
+    
 }
 ?>
