@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Estética</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #d7b9a1;
+            padding: 20px;
+            text-align: center;
+        }
+        .box {
+            width: 300px;
+            margin: 50px auto;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .inputBox {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .inputUser {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-bottom: 1px solid #999;
+            outline: none;
+        }
+        .inputUser:focus {
+            border-bottom: 1px solid #555;
+        }
+        .labelInput {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #999;
+            pointer-events: none;
+            transition: 0.3s ease all;
+        }
+        .inputUser:focus + .labelInput,
+        .inputUser:not(:placeholder-shown) + .labelInput {
+            top: -10px;
+            left: 10px;
+            font-size: 12px;
+            color: #555;
+        }
+        #submit {
+            width: 100%;
+            background-color: #d7b9a1;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        #submit:hover {
+            background-color: #ba9d85;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="cadastro.php">Cadastrar-se</a></li>
+            <li><a href="login.html">Entrar</a></li>
+            <li><a href="#">Serviços</a></li>
+            <li><a href="#">Profissionais</a></li>
+            <li><a href="#">Agendamentos</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="box">
+    <form action="processa_login.php" method="POST">
+        <fieldset>
+            <legend><b>Entrar</b></legend>
+            <br>
+            <div class="inputBox">
+                <input type="text" name="email" id="email" class="inputUser" required>
+                <label for="email" class="labelInput">Email</label>
+            </div>
+            <br><br>
+            <div class="inputBox">
+                <input type="password" name="senha" id="senha" class="inputUser" required>
+                <label for="senha" class="labelInput">Senha</label>
+            </div>
+           
+            <input type="submit" name="submit" id="submit" value="Entrar">
+        </fieldset>
+    </form>
+</div>
+
+</body>
+</html>

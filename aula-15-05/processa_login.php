@@ -1,37 +1,33 @@
 <?php
+session_start();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if(empty($_POST) or (empty($_POST["email"]) or (empty($_POST["cpf"])))){
+    echo"<script> location.href='index.html';</script>";
+}
+include("conexao.php");
     
     $email = $_POST['email'];
     $cpf = $_POST['cpf'];
     
     
-    $servername = "localhost";
-    $username = "aluno";
-    $password = "ceep";
-    $dbname = "belavitta";
-    
-    $conn = new mysqli($localhost, $aluno, $ceep, $belavitta);
-    
- 
-    if ($conn->connect_error) {
-        die("Erro na conexão com o banco de dados: " . $conn->connect_error);
-    }
+    $sql = "SELECT * FROM clientes WHERE email='$email' AND cpf='$cpf'";
+   
+    $res = $con->query($sql) or die($con->error);
+
+    $row = $res->fetch_object();
+  
+    $qtd = $res->num_rows;
+    echo"<script>alert($qtd);</script";
+   
     
 
-    $sql = "SELECT id FROM usuarios WHERE email='$email' AND cpf='$cpf'";
-    $result = $conn->query($sql);
-    
-    if ($result->num_rows > 0) {
-       
-        header("Location: agendamentos.php");
-        exit();
-    } else {
-      
-        header("Location: login.php?erro=1");
-        exit();
+    if($qtd > 0){
+        $_SESSION["email"] = $email;
+        //$_SESSION["cpf"] = $row->cpf;
+        echo"<script>alert('email ou cpf invalido');</script>";
+        echo"<script>location.href='agendamentos.php';</script>";
+
     }
+
     
-    
-}
 ?>
