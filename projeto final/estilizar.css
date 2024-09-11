@@ -1,0 +1,75 @@
+body {
+  background-image: url(imagens/imagem.png);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0; 
+}
+
+.box {
+  width: 400px;
+  padding: 20px;
+  background-color: #d7b9a1;
+  border-radius: 10px;
+  background-color: rgba(232, 216, 203, 0.5);
+}
+
+
+.inputBox {
+  position: relative;
+  margin-bottom: 30px;
+  color: #292625;
+  
+}
+
+.inputUser {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid #333;
+  outline: none;
+  background-color: rgba(146, 141, 136, 0.5);
+}
+
+.labelInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  transition: .5s;
+  
+}
+
+.inputUser:focus ~ .labelInput,
+.inputUser:valid ~ .labelInput {
+  top: -18px;
+  left: 0;
+  color: #292625;
+  font-size: 12px;
+  
+  
+}
+.enviar{
+  width: 100%;
+  background-color: #292625;
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 15px;
+  background-color: rgba(28, 25, 22, 0.5);
+}
+
+
+
+#submit:hover {
+  background-color: #8f8783;
+}
+.data{
+  background-color: rgba(146, 141, 136, 0.5);
+}
