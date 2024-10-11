@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+$_SESSION['cpf'] = $cpf;
+
 // Ativar exibição de erros para debug (Remova em produção)
 error_reporting(E_ALL);
 ini_set('display_errors', 1);

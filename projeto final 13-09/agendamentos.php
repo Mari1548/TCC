@@ -122,14 +122,28 @@ if (!isset($_SESSION["email"])) {
 <h2>Agendamentos Disponíveis</h2>
 
 <div class="form-agendamento">
-    <form id="agendamentoForm">
+    <form action="processaagendamento.php" method="post">
         <label for="servico">Escolha o Serviço:</label>
         <select id="servico" required>
             <option value="">Selecione um serviço</option>
             <option value="Preenchimento Labial">Preenchimento Labial</option>
             <option value="Botox">Botox</option>
             <option value="Limpeza de Pele">Limpeza de Pele</option>
-            <option value="Depilação">Depilação</option>
+            <option value="Depilação">Microagulhamento</option>
+            <option value="Depilação">Silicone</option>
+            <option value="Depilação">Lipoaspiração</option>
+            <option value="Depilação">Rinoplastia</option>
+            <option value="Depilação">Bichectomia</option>
+            <option value="Depilação">Microfocado Facial</option>
+            <option value="Depilação">Bioestimulador</option>
+            <option value="Depilação">Intradermoterapia</option>
+            <option value="Depilação">Massagem relaxante</option>
+            <option value="Depilação">BCAA</option>
+            <option value="Depilação">Fios de Sustentação</option>
+            <option value="Depilação">Massagem modeladora</option>
+            <option value="Depilação">DMAE</option>
+            
+            
             <!-- Adicione mais serviços conforme necessário -->
         </select>
 

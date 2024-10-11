@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("conexao.php");
+include("conexao.php"); // Verifique se o caminho está correto
 
 if (!isset($_SESSION["email"])) {
     header("Location: login.php");
@@ -8,22 +8,38 @@ if (!isset($_SESSION["email"])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $cpf = $_SESSION['cpf']; // Supondo que o CPF esteja armazenado na sessão
-    $hora = $_POST['hora'];
-    $data = $_POST['data'];
-    $diadasemana = $_POST['diadasemana'];
-
-    $query = "INSERT INTO agendamentos (hora, data, cpf, diadesemana) VALUES (?, ?, ?, ?)";
-    $stmt = $conexao->prepare($query);
-    $stmt->bind_param("ssis", $hora, $data, $cpf, $diadasemana);
-
-    if ($stmt->execute()) {
-        echo json_encode(["status" => "success", "message" => "Agendamento realizado com sucesso!"]);
-    } else {
-        echo json_encode(["status" => "error", "message" => "Erro ao agendar: " . $stmt->error]);
+    // Verifique se a chave "cpf" está definida
+    if (!isset($_SESSION['cpf'])) {
+        die("Erro: CPF não encontrado na sessão.");
     }
 
-    $stmt->close();
+    $cpf = $_SESSION['cpf'];
+    $hora = $_POST['horario'] ?? null; // Usa null se não existir
+    $data = $_POST['data'] ?? null; // Usa null se não existir
+    $codservico = $_POST['servico'] ?? null; // Usa null se não existir
+
+    // Validação básica
+    if (is_null($hora) || is_null($data) || is_null($codservico)) {
+        die("Erro: Todos os campos devem ser preenchidos.");
+    }
+
+    $query = "INSERT INTO agendamentos (hora, data, cpf, codservico) VALUES (?, ?, ?, ?)";
+    $stmt = $conexao->prepare($query);
+
+    if ($stmt) {
+        $stmt->bind_param("ssis", $hora, $data, $cpf, $codservico);
+
+        if ($stmt->execute()) {
+            echo json_encode(["status" => "success", "message" => "Agendamento realizado com sucesso!"]);
+        } else {
+            echo json_encode(["status" => "error", "message" => "Erro ao agendar: " . $stmt->error]);
+        }
+
+        $stmt->close();
+    } else {
+        echo json_encode(["status" => "error", "message" => "Erro na preparação da consulta: " . $conexao->error]);
+    }
+
     $conexao->close();
     exit();
 }
