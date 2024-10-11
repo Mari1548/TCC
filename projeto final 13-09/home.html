@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estética - Página Inicial</title>
+    <link rel="stylesheet" type="text/css" href="inicial.css">
+</head>
+<body>
+
+<header>
+    <img src="imagens/B.png" alt="Logo" />
+    <a href="login.php" class="btn-agendar">Agendar uma Avaliação Gratuita</a> 
+    <div class="menu">
+        <ul>
+            <li><a href="cadastrar.php">Cadastrar-se</a></li>
+            <li><a href="servicos.php">Serviços</a></li>
+            <li><a href="login.php">Login</a></li>
+            <li><a href="profissionais.html">Profissionais</a></li>
+        </ul>
+    </div>
+</header>
+
+<div class="slider">
+    <div class="slides">
+        <div class="slide" style="background-image: url('imagens/bioestimulo.png')"></div>
+        <div class="slide" style="background-image: url('imagens/microfocado.png');"></div>
+        <div class="slide" style="background-image: url('imagens/peeling.png');"></div>
+    </div>
+    <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+    <button class="next" onclick="changeSlide(1)">&#10095;</button>
+</div>
+
+<h1>Tratamentos mais procurados</h1>
+
+<div class="treatments">
+    <div class="treatment-box">
+        <a href="login.php">
+            <img src="imagens/DMAE.png" alt="DMAE">
+        </a>
+    </div>
+    <div class="treatment-box">
+        <a href="login.php">
+            <img src="imagens/massagem modeladora.png" alt="Ativador Metabólico Corporal">
+        </a>
+    </div>
+    <div class="treatment-box">
+        <a href="login.php">
+            <img src="imagens/fios de sustentacao.png" alt="Fios de Sustentação">
+        </a>
+    </div>
+    <div class="treatment-box">
+        <a href="login.php">
+            <img src="imagens/BCAA.png" alt="BCAA">
+        </a>
+    </div>
+    <div class="treatment-box">
+        <a href="login.php">
+            <img src="imagens/massagem relaxante.png" alt="Massagem Modeladora">
+        </a>
+    </div>
+    <div class="treatment-box">
+        <a href="login.php">
+            <img src="imagens/intradermoterapia.png" alt="Massagem Relaxante">
+        </a>
+    </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
