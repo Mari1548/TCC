@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
               VALUES ('$cpf', '$nome', '$email', '$cidade', '$telefone', '$datan')";
 
     if (mysqli_query($con, $query)) {
-        header('Location: agendamentos.php');
+        header('Location: login.php');
         exit();
     } else {
         echo "Erro ao cadastrar: " . mysqli_error($con);

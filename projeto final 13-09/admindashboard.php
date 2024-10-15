@@ -8,8 +8,14 @@ if (!isset($_SESSION["admin_logged"]) || !$_SESSION["admin_logged"]) {
     exit();
 }
 
+// Consulta todos os clientes
 $sql = "SELECT * FROM clientes";
 $result = $con->query($sql);
+
+// Verifica se a consulta retornou resultados
+if (!$result) {
+    die("Erro ao consultar clientes: " . $con->error);
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -26,7 +32,7 @@ $result = $con->query($sql);
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: auto;
             background: #fff;
             padding: 20px;
@@ -103,7 +109,9 @@ $result = $con->query($sql);
 <body>
     <div class="header">
         <h2>Área do Administrador</h2>
-        <a href="agendamentos.php">Gerenciar Agendamentos</a>
+        <a href="adm_agendamentos.php">Gerenciar Agendamentos</a>
+        <a href="adm_addcliente.php">Adicionar Novo Cliente</a>
+
         <a href="logout.php">Sair</a>
     </div>
     <div class="container">
@@ -111,18 +119,27 @@ $result = $con->query($sql);
         <table>
             <thead>
                 <tr>
+                    <th>CPF</th>
                     <th>Nome</th>
                     <th>Email</th>
+                    <th>Cidade</th>
+                    <th>Telefone</th>
+                    <th>Data de Nascimento</th>
                     <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
                 <?php while ($row = $result->fetch_assoc()): ?>
                 <tr>
+                    <td><?php echo htmlspecialchars($row['cpf']); ?></td>
                     <td><?php echo htmlspecialchars($row['nome']); ?></td>
                     <td><?php echo htmlspecialchars($row['email']); ?></td>
+                    <td><?php echo htmlspecialchars($row['cidade']); ?></td>
+                    <td><?php echo htmlspecialchars($row['telefone']); ?></td>
+                    <td><?php echo htmlspecialchars($row['datan']); ?></td>
                     <td>
                         <a href="javascript:void(0);" onclick="excluirCliente('<?php echo htmlspecialchars($row['cpf']); ?>')">Excluir</a>
+                        <a href="adm_editarcliente.php?cpf=<?php echo htmlspecialchars($row['cpf']); ?>">Editar</a>
                     </td>
                 </tr>
                 <?php endwhile; ?>
@@ -132,9 +149,9 @@ $result = $con->query($sql);
 
     <script>
     function excluirCliente(cpf) {
-        if (confirm('Tem certeza que deseja excluir?')) {
+        if (confirm('Tem certeza que deseja excluir este cliente?')) {
             const xhr = new XMLHttpRequest();
-            xhr.open("GET", "excluir_cliente.php?cpf=" + encodeURIComponent(cpf), true);
+            xhr.open("GET", "adm_excluircliente.php?cpf=" + encodeURIComponent(cpf), true);
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     alert(xhr.responseText);

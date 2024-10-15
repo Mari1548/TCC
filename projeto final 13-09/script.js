@@ -20,5 +20,5 @@ function changeSlide(step) {
     showSlide(currentSlide + step);
 }
 
-// Inicializar o slider
+
 showSlide(currentSlide);

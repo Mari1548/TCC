@@ -2,9 +2,15 @@
 session_start();
 include("conexao.php");
 
+// Verifique se o usuário está logado
 if (!isset($_SESSION["email"])) {
     header("Location: login.php");
     exit();
+}
+
+// Verifique se o agendamento foi bem-sucedido
+if (isset($_GET['status']) && $_GET['status'] == 'success') {
+    echo '<script>alert("Agendamento realizado com sucesso!");</script>';
 }
 ?>
 <!DOCTYPE html>
@@ -13,169 +19,184 @@ if (!isset($_SESSION["email"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendamentos - Estética</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            padding-top: 120px; /* Ajuste conforme a altura do header */
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 78vh;
-            margin: 0;
-            background-color: #f9f9f9;
-            font-family: Arial, sans-serif;
         }
 
         header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 97.20%;
-            padding: 20px 20px;
-            background-color: #978e8c; /* Fundo cinza */
+            padding: 20px 40px;
+            background-color: #978e8c;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            margin-bottom: 70px;
+            z-index: 1000;
         }
 
-        .btn-voltar {
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-sair {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
             text-decoration: none;
-            color: #555; /* Cor cinza */
-            font-size: 16px;
-            background-color: #e0e0e0; /* Fundo cinza claro */
-            border: none;
-            padding: 10px;
             border-radius: 5px;
-            transition: background 0.3s;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
         }
 
-        .btn-voltar:hover {
-            background-color: #d0d0d0; /* Escurecendo ao passar o mouse */
+        .btn-sair:hover {
+            background-color: #d0d0d0;
         }
 
-        .icon-container img {
-            height: 40px; /* Aumentando a altura da logo */
+        .perfil {
+            height: 40px;
             width: auto;
+            cursor: pointer;
         }
 
-        header img {
-            height: 80px; /* Altura ajustada para a logo */
+        header img.logo {
+            height: 80px;
             width: auto;
-            padding: 10px;
-            margin-left: 13px;
         }
 
         h2 {
             margin: 20px 0;
             color: #333;
+            text-align: center;
         }
 
         .form-agendamento {
             background: white;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            width: 300px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Sombreado nas bordas */
+            padding: 30px;
+            width: 400px;
             text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .form-agendamento:hover {
+            transform: scale(1.02);
         }
 
         label {
             display: block;
-            margin: 10px 0 5px;
+            margin: 15px 0 5px;
             color: #555;
+            font-weight: bold;
         }
 
         select, input {
-            width: calc(100% - 20px);
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
             font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        select:focus, input:focus {
+            border-color: #978e8c;
+            box-shadow: 0 0 5px rgba(151, 139, 139, 0.5);
         }
 
         button {
-            background-color: #e0e0e0; /* Fundo cinza */
-            color: #555; /* Cor cinza */
+            background-color: #978e8c;
+            color: white;
             border: none;
-            padding: 10px;
+            padding: 12px;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            transition: background 0.3s;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.3s;
+            width: 100%;
         }
 
         button:hover {
-            background-color: #d0d0d0; /* Escurecendo ao passar o mouse */
+            background-color: #7b7a77;
+            transform: translateY(-2px);
         }
+
     </style>
 </head>
 <body>
 
 <header>
-    <img src="imagens/B.png" alt="Logo" />
-    <div class="icon-container">
-        <a href="perfil.php"><img src="imagens/icon1.png" alt="Ícone Perfil" class="perfil"></a>
+    <div class="header-left">
+        <img src="imagens/B.png" alt="Logo" class="logo" />
     </div>
-    <a href="home.html" class="btn-voltar">Voltar</a>
+    <div class="header-right">
+        <a href="perfil.php">
+            <img src="imagens/icon1.png" alt="Ícone Perfil" class="perfil">
+        </a>
+        <a href="home.html" class="btn-sair">Sair</a>
+    </div>
 </header>
 
 <h2>Agendamentos Disponíveis</h2>
 
 <div class="form-agendamento">
-    <form action="processaagendamento.php" method="post">
+    <form id="agendamentoForm" action="processaagendamento.php" method="post">
         <label for="servico">Escolha o Serviço:</label>
-        <select id="servico" required>
+        <select id="servico" name="servico" required>
             <option value="">Selecione um serviço</option>
-            <option value="Preenchimento Labial">Preenchimento Labial</option>
-            <option value="Botox">Botox</option>
-            <option value="Limpeza de Pele">Limpeza de Pele</option>
-            <option value="Depilação">Microagulhamento</option>
-            <option value="Depilação">Silicone</option>
-            <option value="Depilação">Lipoaspiração</option>
-            <option value="Depilação">Rinoplastia</option>
-            <option value="Depilação">Bichectomia</option>
-            <option value="Depilação">Microfocado Facial</option>
-            <option value="Depilação">Bioestimulador</option>
-            <option value="Depilação">Intradermoterapia</option>
-            <option value="Depilação">Massagem relaxante</option>
-            <option value="Depilação">BCAA</option>
-            <option value="Depilação">Fios de Sustentação</option>
-            <option value="Depilação">Massagem modeladora</option>
-            <option value="Depilação">DMAE</option>
-            
-            
-            <!-- Adicione mais serviços conforme necessário -->
+            <option value="1">Preenchimento Labial</option>
+            <option value="2">Botox</option>
+            <option value="3">Limpeza de Pele</option>
+            <option value="4">Microagulhamento</option>
+            <option value="5">Silicone</option>
+            <option value="6">Lipoaspiração</option>
+            <option value="7">Rinoplastia</option>
+            <option value="8">Bichectomia</option>
+            <option value="9">Microfocado Facial</option>
+            <option value="10">Bioestimulador</option>
+            <option value="11">Intradermoterapia</option>
+            <option value="12">Massagem Relaxante</option>
+            <option value="13">BCAA</option>
+            <option value="14">Fios de Sustentação</option>
+            <option value="15">Massagem Modeladora</option>
+            <option value="16">DMAE</option>
         </select>
 
         <label for="data">Escolha a Data:</label>
-        <input type="date" id="data" required>
+        <input type="date" id="data" name="data" required>
 
         <label for="horario">Defina o Horário:</label>
-        <input type="time" id="horario" required>
+        <input type="time" id="horario" name="horario" required>
 
         <button type="submit">Agendar</button>
     </form>
 </div>
-
-<script>
-    document.getElementById('agendamentoForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        const servico = document.getElementById('servico').value;
-        const data = document.getElementById('data').value;
-        const horario = document.getElementById('horario').value;
-
-        if (servico && data && horario) {
-            alert(`Agendamento feito:\nServiço: ${servico}\nData: ${data}\nHorário: ${horario}`);
-            // Aqui você pode adicionar a lógica para salvar o agendamento no banco de dados
-
-            // Resetar o formulário
-            this.reset();
-        } else {
-            alert('Por favor, preencha todos os campos.');
-        }
-    });
-</script>
 
 </body>
 </html>

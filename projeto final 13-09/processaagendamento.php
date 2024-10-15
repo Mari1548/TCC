@@ -1,46 +1,37 @@
 <?php
 session_start();
-include("conexao.php"); // Verifique se o caminho está correto
+include("conexao.php"); 
 
-if (!isset($_SESSION["email"])) {
-    header("Location: login.php");
+if (!isset($_SESSION["client_logged"])) {
+    header('Location: login.php');
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Verifique se a chave "cpf" está definida
-    if (!isset($_SESSION['cpf'])) {
-        die("Erro: CPF não encontrado na sessão.");
-    }
+if (empty($_POST) || empty($_POST["servico"]) || empty($_POST["data"]) || empty($_POST["horario"])) {
+    header('Location: agendamentos.php?status=error'); 
+    exit();
+}
 
-    $cpf = $_SESSION['cpf'];
-    $hora = $_POST['horario'] ?? null; // Usa null se não existir
-    $data = $_POST['data'] ?? null; // Usa null se não existir
-    $codservico = $_POST['servico'] ?? null; // Usa null se não existir
 
-    // Validação básica
-    if (is_null($hora) || is_null($data) || is_null($codservico)) {
-        die("Erro: Todos os campos devem ser preenchidos.");
-    }
+$servico = mysqli_real_escape_string($con, $_POST['servico']);
+$data = mysqli_real_escape_string($con, $_POST['data']);
+$horario = mysqli_real_escape_string($con, $_POST['horario']);
+$cpf = $_SESSION['cpf']; 
 
-    $query = "INSERT INTO agendamentos (hora, data, cpf, codservico) VALUES (?, ?, ?, ?)";
-    $stmt = $conexao->prepare($query);
+$sql = "INSERT INTO agendamento (hora, data, cpf, codservico) VALUES (?, ?, ?, ?)";
+$stmt = $con->prepare($sql);
 
-    if ($stmt) {
-        $stmt->bind_param("ssis", $hora, $data, $cpf, $codservico);
-
-        if ($stmt->execute()) {
-            echo json_encode(["status" => "success", "message" => "Agendamento realizado com sucesso!"]);
-        } else {
-            echo json_encode(["status" => "error", "message" => "Erro ao agendar: " . $stmt->error]);
-        }
-
-        $stmt->close();
+if ($stmt) {
+    $stmt->bind_param("sssi", $horario, $data, $cpf, $servico);
+    if ($stmt->execute()) {
+        header('Location: agendamentos.php?status=success'); 
     } else {
-        echo json_encode(["status" => "error", "message" => "Erro na preparação da consulta: " . $conexao->error]);
+        header('Location: agendamentos.php?status=error'); 
     }
-
-    $conexao->close();
-    exit();
+    $stmt->close();
+} else {
+    die("Erro na preparação da consulta: " . $con->error);
 }
+
+$con->close();
 ?>
